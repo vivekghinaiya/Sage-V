@@ -1,0 +1,28 @@
+Sage V
+Copyright 2024 Sage V Contributors
+
+This product is derived from the Dhruva Platform, originally developed by
+AI4Bharat (https://ai4bharat.org) and released under the MIT License.
+
+Original project: https://github.com/AI4Bharat/Dhruva-Platform
+Original copyright: Copyright (c) 2023 AI4Bharat
+
+The original LICENSE file is retained in this repository. Any modifications,
+additions, and the Sage V branding are the work of the Sage V contributors.
+
+THIRD-PARTY COMPONENTS
+----------------------
+This software incorporates components from the following open-source projects:
+
+- Next.js (MIT) — https://github.com/vercel/next.js
+- FastAPI (MIT) — https://github.com/tiangolo/fastapi
+- Chakra UI (MIT) — https://github.com/chakra-ui/chakra-ui
+- Pydantic (MIT) — https://github.com/pydantic/pydantic
+- TanStack Query (MIT) — https://github.com/TanStack/query
+- Framer Motion (MIT) — https://github.com/framer/motion
+- Motor (Apache 2.0) — https://github.com/mongodb/motor
+- SQLAlchemy (MIT) — https://github.com/sqlalchemy/sqlalchemy
+- Celery (BSD) — https://github.com/celery/celery
+- Prometheus Client (Apache 2.0) — https://github.com/prometheus/client_python
+
+See individual package licenses for full terms.
