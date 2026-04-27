@@ -22,7 +22,7 @@ ASR · TTS · NMT · NER · Transliteration · Pipeline · Streaming
 
 ## About
 
-**Sage V** is a full-stack inference platform that lets you host, manage, and query AI models for Indian languages at scale. Built on the [Dhruva Platform](https://github.com/AI4Bharat/Dhruva-Platform) by AI4Bharat, Sage V adds a modernized UI, new dashboard, improved security, and developer-friendly tooling.
+**Sage V** is a full-stack inference platform that lets you host, manage, and query AI models for Indian languages at scale. It provides a modern UI, comprehensive dashboard, production-grade security, and developer-friendly tooling for deploying language AI at scale.
 
 ### Capabilities
 
@@ -156,9 +156,9 @@ Run migrations by starting with `docker-compose-app.yml` — the `appdb-migratio
 
 ---
 
-## Upstream Attribution
+## License
 
-Sage V is derived from the [Dhruva Platform](https://github.com/AI4Bharat/Dhruva-Platform) by [AI4Bharat](https://ai4bharat.org), released under the MIT License. See [`LICENSE`](./LICENSE) and [`NOTICE`](./NOTICE).
+Released under the MIT License. See [`LICENSE`](./LICENSE) for details.
 
 ---
 
