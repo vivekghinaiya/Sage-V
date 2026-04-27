@@ -33,7 +33,7 @@ class DetailsService:
         try:
             service = self.service_repository.find_by_id(request.serviceId)
         except:
-            raise BaseError(Errors.DHRUVA104.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V104.value, traceback.format_exc())
 
         if not service:
             raise ClientError(
@@ -43,7 +43,7 @@ class DetailsService:
         try:
             model = self.model_repository.get_by_id(service.modelId)
         except:
-            raise BaseError(Errors.DHRUVA105.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V105.value, traceback.format_exc())
 
         try:
             # Sending all services in the response temporariliy
@@ -58,7 +58,7 @@ class DetailsService:
                             break
 
         except Exception:
-            raise BaseError(Errors.DHRUVA105.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V105.value, traceback.format_exc())
 
         return ServiceViewResponse(
             **service.dict(),
@@ -71,14 +71,14 @@ class DetailsService:
         try:
             services_list = self.service_repository.find_all()
         except:
-            raise BaseError(Errors.DHRUVA103.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V103.value, traceback.format_exc())
 
         response_list: List[ServiceListResponse] = []
         for service in services_list:
             try:
                 model = self.model_repository.get_one({"modelId": service.modelId})
             except:
-                raise BaseError(Errors.DHRUVA105.value, traceback.format_exc())
+                raise BaseError(Errors.SAGE_V105.value, traceback.format_exc())
 
             response_list.append(
                 ServiceListResponse(

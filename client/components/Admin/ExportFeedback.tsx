@@ -3,7 +3,7 @@ import { VStack, Button, Box, Text, useToast, HStack, Stack, FormLabel, Select }
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { apiInstance, dhruvaAPI } from '../../api/apiConfig';
+import { apiInstance, sageVAPI } from '../../api/apiConfig';
 import { useQuery } from '@tanstack/react-query';
 import { listServices } from '../../api/serviceAPI';
 
@@ -54,7 +54,7 @@ const ExportFeedback = () => {
             else
             {
             const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/services/feedback/export?fromDate=${FromUnix}&toDate=${ToUnix}`;
-            // const url = `https://api.dhruva.co/services/feedback/export?serviceId=${selectedServiceID}&fromDate=${FromUnix}&toDate=${ToUnix}`;
+            // const url = `https://api.sage-v.co/services/feedback/export?serviceId=${selectedServiceID}&fromDate=${FromUnix}&toDate=${ToUnix}`;
             apiInstance
               .get(url, {
                 responseType: 'blob',

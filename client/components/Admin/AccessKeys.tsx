@@ -1,3 +1,4 @@
+import { Search, Key, ChevronLeft, ChevronRight, Copy } from "lucide-react";
 import {
   Box,
   Button,
@@ -30,9 +31,6 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
-import { MdVpnKey } from "react-icons/md";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import KeyCard from "../Mobile/Admin/KeyCard";
 import KeyModal from "./KeyModal";
@@ -43,7 +41,6 @@ import {
   viewadmindashboard,
 } from "../../api/adminAPI";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FaCopy } from "react-icons/fa";
 
 const AccessKeys = () => {
   interface Key {
@@ -210,7 +207,7 @@ const AccessKeys = () => {
                   variant="ghost"
                   onClick={() => navigator.clipboard.writeText(data.api_key)}
                 >
-                  <FaCopy />
+                  <Copy size={14} />
                   &nbsp; Copy Key
                 </Button>
               </>
@@ -310,7 +307,7 @@ const AccessKeys = () => {
             API&nbsp;Keys
           </Text>
           {/* <Text fontSize={"3xl"} fontWeight={"bold"}>
-            <MdVpnKey />
+            <Key />
           </Text> */}
         </HStack>
         {/* Searchbar and Create Button */}
@@ -326,7 +323,7 @@ const AccessKeys = () => {
             <InputLeftElement
             color={"gray.600"}
               pointerEvents="none"
-              children={<IoSearchOutline />}
+              children={<Search />}
             />
             <Input
               color={"gray.600"}
@@ -560,7 +557,7 @@ const AccessKeys = () => {
                           }
                         }}
                       >
-                        <AiOutlineLeft fontSize={"x-large"} />
+                        <ChevronLeft fontSize={"x-large"} />
                       </Button>
                       <Spacer />
                       <Spacer />
@@ -579,7 +576,7 @@ const AccessKeys = () => {
                           }
                         }}
                       >
-                        <AiOutlineRight fontSize={"x-large"} />
+                        <ChevronRight fontSize={"x-large"} />
                       </Button>
                     </HStack>
                     <br></br>

@@ -1,3 +1,4 @@
+import { FileAudio } from "lucide-react";
 import {
   Stack,
   Text,
@@ -17,10 +18,9 @@ import {
   NumberInputField,
   Box,
 } from "@chakra-ui/react";
-import { FaRegFileAudio } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { IndicTransliterate } from "@ai4bharat/indic-transliterate";
-import { dhruvaAPI, apiInstance } from "../../api/apiConfig";
+import { sageVAPI, apiInstance } from "../../api/apiConfig";
 import { lang2label } from "../../config/config";
 import { getWordCount } from "../../utils/utils";
 import React from "react";
@@ -68,7 +68,7 @@ const TTSTry: React.FC<Props> = (props) => {
     setFetching(true);
     apiInstance
       .post(
-        dhruvaAPI.ttsInference + `?serviceId=${props.serviceId}`,
+        sageVAPI.ttsInference + `?serviceId=${props.serviceId}`,
         {
           input: [
             {
@@ -308,7 +308,7 @@ const TTSTry: React.FC<Props> = (props) => {
                   }
                 }}
               >
-                <FaRegFileAudio />
+                <FileAudio />
               </Button>
               <audio style={{ width: "auto" }} src={audio} controls />
 

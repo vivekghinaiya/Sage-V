@@ -58,8 +58,8 @@ class InferenceLoggingRoute(APIRoute):
 
             except BaseError as exc:
                 if exc.error_kind in (
-                    Errors.DHRUVA101.value["kind"],
-                    Errors.DHRUVA102.value["kind"],
+                    Errors.SAGE_V101.value["kind"],
+                    Errors.SAGE_V102.value["kind"],
                 ):
                     error_msg = exc.error_kind + "_" + exc.error_message
                 raise exc

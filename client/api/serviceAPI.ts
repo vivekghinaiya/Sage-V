@@ -1,12 +1,11 @@
 import { ULCAFeedbackRequest } from "../components/Feedback/FeedbackTypes";
-import { dhruvaAPI, apiInstance } from "./apiConfig";
+import { sageVAPI, apiInstance } from "./apiConfig";
 
 const listServices = async (): Promise<ServiceList[]> => {
   const response = await apiInstance({
     method: "GET",
-    url: dhruvaAPI.listServices,
+    url: sageVAPI.listServices,
   });
-
   return response.data;
 };
 
@@ -29,10 +28,8 @@ const getService = async (
 ): Promise<ServiceView> => {
   const response = await apiInstance({
     method: "POST",
-    url: dhruvaAPI.viewService,
-    data: {
-      serviceId: serviceId,
-    },
+    url: sageVAPI.viewService,
+    data: { serviceId },
   });
   return response.data;
 };
@@ -45,7 +42,7 @@ const submitFeedback = async (feedback: ULCAFeedbackRequest) => {
   return response.data;
 };
 
-const fetchFeedbackQuestions = async (feedbackRequest) => {
+const fetchFeedbackQuestions = async (feedbackRequest: unknown) => {
   const response = await apiInstance.post(
     "/services/feedback/questions",
     feedbackRequest

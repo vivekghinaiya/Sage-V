@@ -3,7 +3,7 @@ version: "3"
 services:
   rabbitmq_server:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: sage-v-rabbitmq
     hostname: rabbithost
     ports:
       - "15672:15672"
@@ -14,7 +14,7 @@ services:
     env_file:
       - .env
     networks:
-      - dhruva-network
+      - sage-v-network
 
   celery-metering:
     container_name: celery-metering
@@ -29,7 +29,7 @@ services:
       - .env
     command: sh -c "python3 -m celery -A celery_backend.celery_app worker -Q data-log,heartbeat,upload-feedback-dump,send-usage-email"
     networks:
-      - dhruva-network
+      - sage-v-network
 
   celery-monitoring:
     container_name: celery-monitoring
@@ -46,7 +46,7 @@ services:
       - .env
     command: sh -c "python3 -m celery -A celery_backend.celery_app worker -Q metrics-log"
     networks:
-      - dhruva-network
+      - sage-v-network
 
   celery_beat:
     container_name: celery_beat
@@ -63,10 +63,10 @@ services:
       - .env
     command: sh -c "python3 -m celery -A celery_backend.celery_app beat --loglevel DEBUG"
     networks:
-      - dhruva-network
+      - sage-v-network
 
   timescaledb:
-    container_name: timescaledb
+    container_name: sage-v-timescaledb
     image: "timescale/timescaledb-ha:pg15-latest"
     ports:
       - "5432:5432"
@@ -79,11 +79,11 @@ services:
     env_file:
       - .env
     networks:
-      - dhruva-network
+      - sage-v-network
 
   # Use Flower later for monitoring
   # celery-flower:
-  #   container_name: celery-flower
+  #   container_name: sage-v-celery-flower
   #   image: server_image
   #   working_dir: /src
   #   environment:
@@ -106,5 +106,5 @@ volumes:
   timescaledb: {}
 
 networks:
-  dhruva-network:
-    name: dhruva-network
+  sage-v-network:
+    name: sage-v-network

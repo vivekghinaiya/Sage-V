@@ -1,10 +1,9 @@
+import { Pencil, UserCircle } from "lucide-react";
 import { Box, Button, Center, Checkbox, Divider, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Stack, StackDivider, Text, useDisclosure, useToast, VStack } from "@chakra-ui/react"
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Head from "next/head"
 import Image from "next/image"
 import { useState } from "react";
-import { BiPencil } from "react-icons/bi";
-import { HiUserCircle } from "react-icons/hi";
 import { getUser, updateUser } from "../api/authAPI";
 import useMediaQuery from "../hooks/useMediaQuery";
 
@@ -62,7 +61,7 @@ export default function Profile() {
             <VStack>
             {!smallscreen&&<Image alt="icon" src="profile.svg" width={500} height={500}/>}
             <HStack>
-            {smallscreen&&<HiUserCircle size={40} />}
+            {smallscreen&&<UserCircle size={40} />}
             <Text fontSize={smallscreen?"xl":"3xl"} fontWeight={"bold"}>
             {user?.name}
             </Text>
@@ -89,7 +88,7 @@ export default function Profile() {
           <Button onClick={()=>{onOpen();setShowPassword(false)}} width="20rem" mt="2rem" variant={"outline"}>
               Edit Profile 
               &nbsp;
-              <BiPencil/>
+              <Pencil/>
           </Button>
           </Box>
           </Center>

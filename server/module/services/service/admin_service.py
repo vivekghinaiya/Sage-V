@@ -39,7 +39,7 @@ class AdminService:
                 page, limit, target_user_id
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA109.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V109.value, traceback.format_exc())
 
         return GetAllApiKeysDetailsResponse(
             api_keys=api_keys,
@@ -111,7 +111,7 @@ class AdminService:
         try:
             service = self.service_repository.find_by_id(request_body.serviceId)
             if not service:
-                raise BaseError(Errors.DHRUVA104.value)
+                raise BaseError(Errors.SAGE_V104.value)
             service = service.dict()
             if "healthStatus" not in service:
                 service["healthStatus"] = {}
@@ -120,4 +120,4 @@ class AdminService:
             self.service_repository.update_one(service)
             return {"message": "Service status updated successfully"}
         except:
-            raise BaseError(Errors.DHRUVA113.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V113.value, traceback.format_exc())

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   server:
-    container_name: server
+    container_name: sage-v-server
     image: server
     stdin_open: true
     tty: true
@@ -17,10 +17,10 @@ services:
       - "$BACKEND_PORT:$BACKEND_PORT"
     command: uvicorn main:app --workers $BACKEND_WORKERS --port $BACKEND_PORT --host 0.0.0.0 --proxy-headers
     networks:
-      - dhruva-network
+      - sage-v-network
 
   client:
-    container_name: client
+    container_name: sage-v-client
     image: client
     stdin_open: true
     tty: true
@@ -32,29 +32,29 @@ services:
       - .env
     command: yarn start --port $FRONTEND_PORT
     networks:
-      - dhruva-network
+      - sage-v-network
 
   seed:
     image: seed
-    container_name: seed
+    container_name: sage-v-seed
     env_file:
       - .env
     command: sh -c "python3 main.py"
     networks:
-      - dhruva-network
+      - sage-v-network
 
   appdb-migration:
     image: server
-    container_name: appdb-migration
+    container_name: sage-v-appdb-migration
     env_file:
       - .env
     command: sh -c "python3 migrate.py"
     networks:
-      - dhruva-network
+      - sage-v-network
 
 volumes:
   app_data: {}
 
 networks:
-  dhruva-network:
-    name: dhruva-network
+  sage-v-network:
+    name: sage-v-network

@@ -1,3 +1,4 @@
+import { Search } from "lucide-react";
 import {
   Box,
   Button,
@@ -7,7 +8,6 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
-import { IoSearchOutline } from "react-icons/io5";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import ContentLayout from "../../components/Layouts/ContentLayout";
 import { useState, useEffect } from "react";
@@ -151,7 +151,7 @@ export default function Services() {
                 <InputLeftElement
                   color="gray.600"
                   pointerEvents="none"
-                  children={<IoSearchOutline />}
+                  children={<Search />}
                 />
                 <Input
                   borderRadius={0}

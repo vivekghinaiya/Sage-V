@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dhruva-server
+  name: sage-v-server
 spec:
   selector:
-    app: dhruva-server
+    app: sage-v-server
   ports:
     - port: 8000
       targetPort: 8000

@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IndicTransliterate } from "@ai4bharat/indic-transliterate";
-import { dhruvaAPI, apiInstance } from "../../api/apiConfig";
+import { sageVAPI, apiInstance } from "../../api/apiConfig";
 import { lang2label } from "../../config/config";
 import { getWordCount } from "../../utils/utils";
 import React from "react";
@@ -65,7 +65,7 @@ const NMTTry: React.FC<Props> = (props) => {
     setFetching(true);
     apiInstance
       .post(
-        dhruvaAPI.translationInference + `?serviceId=${props.serviceId}`,
+        sageVAPI.translationInference + `?serviceId=${props.serviceId}`,
         {
           input: [
             {

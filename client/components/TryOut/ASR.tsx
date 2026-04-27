@@ -1,3 +1,4 @@
+import { Mic } from "lucide-react";
 import {
   Stack,
   Text,
@@ -18,9 +19,8 @@ import {
   Spacer,
   useToast,
 } from "@chakra-ui/react";
-import { FaMicrophone } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { dhruvaAPI, apiInstance } from "../../api/apiConfig";
+import { sageVAPI, apiInstance } from "../../api/apiConfig";
 import { lang2label } from "../../config/config";
 import { getWordCount } from "../../utils/utils";
 import {
@@ -85,7 +85,7 @@ const ASRTry: React.FC<Props> = (props) => {
   const getASROutput = (asrInput: string) => {
     apiInstance
       .post(
-        dhruvaAPI.asrInference + `?serviceId=${props.serviceId}`,
+        sageVAPI.asrInference + `?serviceId=${props.serviceId}`,
         {
           audio: [
             {
@@ -168,7 +168,7 @@ const ASRTry: React.FC<Props> = (props) => {
     setStreaming(true);
     setFetching(true);
     streamingClient.connect(
-      dhruvaAPI.asrStreamingInference,
+      sageVAPI.asrStreamingInference,
       props.serviceId,
       process.env.NEXT_PUBLIC_API_KEY,
       language,
@@ -390,7 +390,7 @@ const ASRTry: React.FC<Props> = (props) => {
                       stopRecording();
                     }}
                   >
-                    <FaMicrophone /> Stop
+                    <Mic /> Stop
                   </Button>
                 ) : (
                   <Button
@@ -400,7 +400,7 @@ const ASRTry: React.FC<Props> = (props) => {
                       }
                     }}
                   >
-                    <FaMicrophone size={15} />
+                    <Mic size={15} />
                   </Button>
                 )}
                 <Input
@@ -454,7 +454,7 @@ const ASRTry: React.FC<Props> = (props) => {
                       stopStreaming();
                     }}
                   >
-                    <FaMicrophone /> Stop
+                    <Mic /> Stop
                   </Button>
                 ) : (
                   <Button
@@ -462,7 +462,7 @@ const ASRTry: React.FC<Props> = (props) => {
                       startStreaming();
                     }}
                   >
-                    <FaMicrophone size={15} />
+                    <Mic size={15} />
                   </Button>
                 )}
               </Stack>

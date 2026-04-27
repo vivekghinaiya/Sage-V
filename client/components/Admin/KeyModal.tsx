@@ -1,11 +1,10 @@
+import { ArrowLeft, Copy } from "lucide-react";
 import React, { useState } from 'react'
 
 import { Modal, Text, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Box, HStack } from "@chakra-ui/react";
-import { BiArrowBack } from 'react-icons/bi';
 import { createkey, getkeydata, setstatus } from '../../api/adminAPI';
 import { useMutation } from '@tanstack/react-query';
 import { taskOptions } from '../Utils/Options';
-import { FaCopy } from 'react-icons/fa';
 import { userAgent } from 'next/server';
 
 const KeyModal = ({ isOpen, onClose, name, k, active, onRefresh, user_id, type, data_tracking }: {
@@ -68,7 +67,7 @@ const KeyModal = ({ isOpen, onClose, name, k, active, onRefresh, user_id, type, 
               variant="ghost"
               onClick={() => navigator.clipboard.writeText(data.api_key)}
             >
-              <FaCopy />
+              <Copy />
               &nbsp; Copy Key
             </Button>
           </>
@@ -142,7 +141,7 @@ const KeyModal = ({ isOpen, onClose, name, k, active, onRefresh, user_id, type, 
     <Modal isOpen={isOpen} onClose={()=>{onClose(); setModal(<></>)}}>
       <ModalOverlay bg='blackAlpha.300'/>
       <ModalContent alignItems={"left"}>
-      <Button variant={"ghost"} mt="1rem" ml="1rem" width={"10rem"} onClick={()=>{onClose(); setModal(<></>)}}><BiArrowBack/>&nbsp;Back to List</Button >
+      <Button variant={"ghost"} mt="1rem" ml="1rem" width={"10rem"} onClick={()=>{onClose(); setModal(<></>)}}><ArrowLeft/>&nbsp;Back to List</Button >
         <ModalHeader>{name}</ModalHeader>
         <ModalBody>
         <Box width={"100%"} minH={"4rem"} border={"1px"} borderColor={"gray.300"} background={"blackAlpha.50"} >

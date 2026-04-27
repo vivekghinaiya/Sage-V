@@ -47,12 +47,12 @@ class UserService:
         try:
             id = self.user_repository.insert_one(new_user)
         except Exception:
-            raise BaseError(Errors.DHRUVA207.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V207.value, traceback.format_exc())
 
         try:
             created_user = self.user_repository.get_by_id(ObjectId(str(id)))
         except Exception:
-            raise BaseError(Errors.DHRUVA206.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V206.value, traceback.format_exc())
         try:
             api_request = CreateApiKeyRequest(
                 name="default",
@@ -67,21 +67,21 @@ class UserService:
                 id=ObjectId(str(created_user.id)),
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA207.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V207.value, traceback.format_exc())
         return created_user
 
     def list_users(self):
         try:
             users = self.user_repository.find({})
         except Exception:
-            raise BaseError(Errors.DHRUVA206.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V206.value, traceback.format_exc())
         return users
 
     def modify_user(self, params: ModifyUserQuery, user_id: ObjectId):
         try:
             user = self.user_repository.get_by_id(ObjectId(user_id))
         except Exception:
-            raise BaseError(Errors.DHRUVA206.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V206.value, traceback.format_exc())
 
         ph = PasswordHasher()
 
@@ -95,6 +95,6 @@ class UserService:
         try:
             self.user_repository.save(user)
         except Exception:
-            raise BaseError(Errors.DHRUVA212.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V212.value, traceback.format_exc())
 
         return user

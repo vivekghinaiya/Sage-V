@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { IndicTransliterate } from "@ai4bharat/indic-transliterate";
-import { dhruvaAPI, apiInstance } from "../../api/apiConfig";
+import { sageVAPI, apiInstance } from "../../api/apiConfig";
 import { lang2label, tag2Color } from "../../config/config";
 import React from "react";
 import { FeedbackModal } from "../Feedback/Feedback";
@@ -51,7 +51,7 @@ const NERTry: React.FC<Props> = (props) => {
     setFetching(true);
     apiInstance
       .post(
-        dhruvaAPI.nerInference + `?serviceId=${props.serviceId}`,
+        sageVAPI.nerInference + `?serviceId=${props.serviceId}`,
         {
           input: [
             {

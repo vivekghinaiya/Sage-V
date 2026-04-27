@@ -1,300 +1,234 @@
 import {
-  Text,
   Box,
-  SimpleGrid,
-  Button,
   Divider,
-  Avatar,
-  useColorModeValue,
   HStack,
-  Spacer,
+  Image,
+  Text,
+  Tooltip,
+  useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
-import Image from "next/image";
-import { IoConstructOutline, IoGridOutline } from "react-icons/io5";
-import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import {
+  BarChart2,
+  Cpu,
+  GitBranch,
+  LayoutGrid,
+  Settings,
+} from "lucide-react";
 import Link from "next/link";
-import { RiFlowChart } from "react-icons/ri";
-import { BiChart } from "react-icons/bi";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+
+type NavSection = {
+  label: string;
+  items: NavItem[];
+  adminOnly?: boolean;
+};
+
+type NavItem = {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  pathKey: string;
+  adminOnly?: boolean;
+};
+
+const NAV_SECTIONS: NavSection[] = [
+  {
+    label: "Workspace",
+    items: [
+      {
+        href: "/services",
+        icon: <LayoutGrid size={20} />,
+        label: "Services",
+        pathKey: "services",
+      },
+      {
+        href: "/models",
+        icon: <Cpu size={20} />,
+        label: "Models",
+        pathKey: "models",
+      },
+      {
+        href: "/pipeline",
+        icon: <GitBranch size={20} />,
+        label: "Pipeline",
+        pathKey: "pipeline",
+      },
+    ],
+  },
+  {
+    label: "Insights",
+    adminOnly: true,
+    items: [
+      {
+        href: "/monitoring",
+        icon: <BarChart2 size={20} />,
+        label: "Monitoring",
+        pathKey: "monitoring",
+        adminOnly: true,
+      },
+    ],
+  },
+  {
+    label: "Admin",
+    adminOnly: true,
+    items: [
+      {
+        href: "/admin",
+        icon: <Settings size={20} />,
+        label: "Admin",
+        pathKey: "admin",
+        adminOnly: true,
+      },
+    ],
+  },
+];
 
 const Sidebar: React.FC = () => {
-  const bg = useColorModeValue("light.100", "dark.100");
-  const [userRole, setUserRole] = useState<String>("CONSUMER");
-  const [isOpen, setNavbar] = useState<Boolean>(false);
-  const [number, setNumber] = useState<Number>(0);
+  const bg = useColorModeValue("white", "bg.surface");
+  const borderColor = useColorModeValue("border.default", "border.default");
+  const labelColor = useColorModeValue("fg.muted", "fg.muted");
+  const activeBg = useColorModeValue("brand.50", "whiteAlpha.100");
+  const activeColor = useColorModeValue("brand.600", "brand.300");
+  const textColor = useColorModeValue("fg.default", "fg.default");
+
+  const [userRole, setUserRole] = useState<string>("CONSUMER");
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeKey, setActiveKey] = useState("");
   const router = useRouter();
+
   useEffect(() => {
-    setUserRole(localStorage.getItem("user_role"));
-    switch (router.pathname.split("/")[1]) {
-      case "services":
-        setNumber(1);
-        break;
-      case "models":
-        setNumber(3);
-        break;
-      case "admin":
-        setNumber(2);
-        break;
-      case "pipeline":
-        setNumber(5);
-        break;
-      case "monitoring":
-        setNumber(4);
-        break;
-      default:
-        setNumber(0);
-        break;
-    }
+    const role = localStorage.getItem("user_role") ?? "CONSUMER";
+    setUserRole(role);
+    const segment = router.pathname.split("/")[1];
+    setActiveKey(segment);
   }, [router.pathname]);
+
+  const isAdmin = userRole === "ADMIN";
 
   return (
     <Box
       h="100vh"
       position="fixed"
-      background={bg}
-      p="4"
+      bg={bg}
+      borderRight="1px solid"
+      borderColor={borderColor}
       zIndex={50}
-      style={{ textAlign: "center" }}
-      onMouseEnter={() => {
-        if (!isOpen) setNavbar(true);
-      }}
-      onMouseLeave={() => {
-        if (isOpen) setNavbar(false);
-      }}
-      width={isOpen ? "300px" : "85px"}
-      transition="width 0.2s"
-      boxShadow={"md"}
+      width={isOpen ? "220px" : "72px"}
+      transition="width 0.2s ease"
+      display="flex"
+      flexDirection="column"
+      boxShadow="brand"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+      overflow="hidden"
     >
-      <Box pt="1.5" borderRadius="xl">
-        <Box h="4rem" mt={4} justifyContent="flex-start">
-          <HStack>
-            <Image alt="logo" src="/AI4Bharat.svg" height="50" width="50" />
-            <Spacer />
-            {isOpen ? (
-              <Text marginLeft={4} fontSize={"x-large"} fontWeight={"bold"}>
-                Dhruva
-              </Text>
-            ) : (
-              <></>
-            )}
-            <Spacer />
-            <Spacer />
-          </HStack>
-        </Box>
-        <Divider />
-        <SimpleGrid
-          spacingY={4}
-          spacingX={1}
-          mt="14"
-          width={"100%"}
-          marginLeft={"0"}
-        >
-          <Box>
-            <Link href={"/services"}>
-              <Button
-                mb="2"
-                ml={isOpen ? 0 : 0}
-                h={10}
-                w="100%"
-                variant={number === 1 ? "solid" : "ghost"}
-                background={number === 1 ? "orange.500" : "transperent"}
-                color={number === 1 ? "white" : "black"}
-                justifyContent="flex-start"
-                size="l"
-                boxShadow={number === 1 ? "xl" : "none"}
-                transition="width 0.2s"
-              >
-                <Box>
-                  <IoGridOutline style={{ marginLeft: 12 }} size={25} />
-                </Box>
-                {isOpen ? (
-                  <Text marginLeft={4} fontWeight={"normal"}>
-                    Services
-                  </Text>
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Link>
+      {/* Logo area */}
+      <Box px={3} py={4} borderBottom="1px solid" borderColor={borderColor}>
+        <HStack spacing={3}>
+          <Box flexShrink={0}>
+            <Image
+              src="/sage-v-mark.svg"
+              alt="Sage V"
+              width="40px"
+              height="40px"
+            />
           </Box>
-
-          <Box w="100%">
-            <Link href={"/models"}>
-              <Button
-                mb="2"
-                ml={isOpen ? 0 : 0}
-                h={10}
-                w="100%"
-                variant={number === 3 ? "solid" : "ghost"}
-                background={number === 3 ? "orange.500" : "transperent"}
-                color={number === 3 ? "white" : "black"}
-                justifyContent="flex-start"
-                size="l"
-                boxShadow={number === 3 ? "xl" : "none"}
-                transition="width 0.2s"
-              >
-                <Box>
-                  <IoConstructOutline style={{ marginLeft: 12 }} size={25} />
-                </Box>
-                {isOpen ? (
-                  <Text marginLeft={4} fontWeight={"normal"}>
-                    Models
-                  </Text>
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Link>
-          </Box>
-          <Box w="100%">
-            <Link href={"/pipeline"}>
-              <Button
-                mb="2"
-                ml={isOpen ? 0 : 0}
-                h={10}
-                w="100%"
-                variant={number === 5 ? "solid" : "ghost"}
-                background={number === 5 ? "orange.500" : "transperent"}
-                color={number === 5 ? "white" : "black"}
-                justifyContent="flex-start"
-                size="l"
-                boxShadow={number === 5 ? "xl" : "none"}
-                transition="width 0.2s"
-              >
-                <Box>
-                  <RiFlowChart style={{ marginLeft: 12 }} size={25} />
-                </Box>
-                {isOpen ? (
-                  <Text marginLeft={4} fontWeight={"normal"}>
-                    Pipeline
-                  </Text>
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Link>
-          </Box>
-          {/* <Box>
-            <Link href={"/billing"}>
-              <Button
-                mb="2"
-                ml={isOpen ? 0 : 0}
-                h={10}
-                w="100%"
-                variant={number === 4 ? "solid" : "ghost"}
-                background={number === 4 ? "orange.500" : "transperent"}
-                color={number === 4 ? "white" : "black"}
-                justifyContent="flex-start"
-                size="l"
-                boxShadow={number === 4 ? "xl" : "none"}
-                transition="width 0.2s"
-              >
-                <Box>
-                  <AiOutlineDollarCircle style={{ marginLeft: 12 }} size={25} />
-                </Box>
-                {isOpen ? (
-                  <Text marginLeft={4} fontWeight={"normal"}>
-                    Billing
-                  </Text>
-                ) : (
-                  <></>
-                )}
-              </Button>
-            </Link>
-          </Box> */}
-          {userRole === "ADMIN" ? (
-            <Box>
-              <Link href={"/monitoring"}>
-                <Button
-                  mb="2"
-                  ml={isOpen ? 0 : 0}
-                  h={10}
-                  variant={number === 4 ? "solid" : "ghost"}
-                  background={number === 4 ? "orange.500" : "transperent"}
-                  color={number === 4 ? "white" : "black"}
-                  size="l"
-                  boxShadow={number === 4 ? "xl" : "none"}
-                  w={"100%"}
-                  justifyContent="flex-start"
-                >
-                  <Box>
-                    <BiChart style={{ marginLeft: 12 }} size={25} />
-                  </Box>
-                  {isOpen ? (
-                    <Text marginLeft={4} fontWeight={"normal"}>
-                      Monitoring
-                    </Text>
-                  ) : (
-                    <></>
-                  )}
-                </Button>
-              </Link>
-            </Box>
-          ) : (
-            <></>
+          {isOpen && (
+            <Text
+              fontFamily="Fraunces, Georgia, serif"
+              fontWeight="700"
+              fontSize="lg"
+              color={activeColor}
+              whiteSpace="nowrap"
+            >
+              Sage V
+            </Text>
           )}
-
-          {userRole === "ADMIN" ? (
-            <Box>
-              <Link href="/admin">
-                <Button
-                  mb="2"
-                  ml={isOpen ? 0 : 0}
-                  h={10}
-                  w="100%"
-                  variant={number === 2 ? "solid" : "ghost"}
-                  background={number === 2 ? "orange.500" : "transperent"}
-                  color={number === 2 ? "white" : "black"}
-                  justifyContent="flex-start"
-                  size="l"
-                  boxShadow={number === 2 ? "xl" : "none"}
-                  transition="width 0.2s"
-                >
-                  <Box>
-                    <MdOutlineAdminPanelSettings
-                      style={{ marginLeft: 12, marginRight: 12 }}
-                      size={25}
-                    />
-                  </Box>
-                  {isOpen ? <Text fontWeight={"normal"}> Admin</Text> : <></>}
-                </Button>
-              </Link>
-            </Box>
-          ) : (
-            <></>
-          )}
-          {/* <Box position={"absolute"} bottom="10">
-            <Box>
-              <Link href="/profile">
-                <Button
-                  mb="2"
-                  ml={isOpen ? 0 : 0}
-                  h={10}
-                  w={"100%"}
-                  variant={number === 2 ? "solid" : "ghost"}
-                  colorScheme={number === 2 ? "primary" : "transperent"}
-                  justifyContent="flex-start"
-                  size="l"
-                  boxShadow={number === 2 ? "xl" : "none"}
-                  transition="width 0.2s"
-                >
-                  <Box>
-                    <Avatar style={{ marginLeft: 12 }} size="sm" />
-                  </Box>
-                  {isOpen ? (
-                    <Text marginLeft={4} fontWeight={"normal"}>
-                      Profile
-                    </Text>
-                  ) : (
-                    <></>
-                  )}
-                </Button>
-              </Link>
-            </Box>
-          </Box> */}
-        </SimpleGrid>
+        </HStack>
       </Box>
+
+      {/* Navigation */}
+      <VStack spacing={0} align="stretch" flex={1} py={3} overflowY="auto">
+        {NAV_SECTIONS.map((section) => {
+          if (section.adminOnly && !isAdmin) return null;
+          const visibleItems = section.items.filter(
+            (item) => !item.adminOnly || isAdmin
+          );
+          if (visibleItems.length === 0) return null;
+
+          return (
+            <Box key={section.label} mb={2}>
+              {isOpen && (
+                <Text
+                  px={4}
+                  py={1}
+                  fontSize="10px"
+                  fontWeight="700"
+                  textTransform="uppercase"
+                  letterSpacing="wider"
+                  color={labelColor}
+                  whiteSpace="nowrap"
+                >
+                  {section.label}
+                </Text>
+              )}
+              {visibleItems.map((item) => {
+                const isActive = activeKey === item.pathKey;
+                return (
+                  <Tooltip
+                    key={item.href}
+                    label={item.label}
+                    placement="right"
+                    isDisabled={isOpen}
+                    hasArrow
+                  >
+                    <Link href={item.href} passHref legacyBehavior>
+                      <Box
+                        as="a"
+                        mx={2}
+                        px={isOpen ? 3 : 0}
+                        py={2}
+                        borderRadius="md"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent={isOpen ? "flex-start" : "center"}
+                        bg={isActive ? activeBg : "transparent"}
+                        color={isActive ? activeColor : textColor}
+                        borderLeft={isActive ? "3px solid" : "3px solid transparent"}
+                        borderLeftColor={isActive ? "accent.400" : "transparent"}
+                        _hover={{
+                          bg: activeBg,
+                          color: activeColor,
+                        }}
+                        transition="all 0.15s"
+                        cursor="pointer"
+                        role="link"
+                        aria-label={item.label}
+                        aria-current={isActive ? "page" : undefined}
+                      >
+                        <Box flexShrink={0}>{item.icon}</Box>
+                        {isOpen && (
+                          <Text
+                            ml={3}
+                            fontSize="sm"
+                            fontWeight={isActive ? "600" : "400"}
+                            whiteSpace="nowrap"
+                          >
+                            {item.label}
+                          </Text>
+                        )}
+                      </Box>
+                    </Link>
+                  </Tooltip>
+                );
+              })}
+              {isOpen && <Divider mt={2} />}
+            </Box>
+          );
+        })}
+      </VStack>
     </Box>
   );
 };

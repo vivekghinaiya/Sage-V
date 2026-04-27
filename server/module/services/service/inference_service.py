@@ -88,7 +88,7 @@ def validate_service_id(serviceId: str, service_repository):
                 status_code=status.HTTP_404_NOT_FOUND, message="Invalid Service Id"
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA104.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V104.value, traceback.format_exc())
 
     return service
 
@@ -100,7 +100,7 @@ def validate_model_id(modelId: str, model_repository):
         try:
             model = populate_model_cache(modelId, model_repository)
         except Exception:
-            raise BaseError(Errors.DHRUVA105.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V105.value, traceback.format_exc())
 
     return model
 
@@ -161,7 +161,7 @@ class InferenceService:
                     request_obj, api_key_name, user_id
                 )
             case _:
-                raise BaseError(Errors.DHRUVA115.value)
+                raise BaseError(Errors.SAGE_V115.value)
 
     async def run_asr_triton_inference(
         self, request_body: ULCAAsrInferenceRequest, api_key_name: str, user_id: str
@@ -732,8 +732,8 @@ class InferenceService:
             except BaseError as exc:
                 exception = exc
                 if exc.error_kind in (
-                    Errors.DHRUVA101.value["kind"],
-                    Errors.DHRUVA102.value["kind"],
+                    Errors.SAGE_V101.value["kind"],
+                    Errors.SAGE_V102.value["kind"],
                 ):
                     error_msg = exc.error_kind + "_" + exc.error_message
             except Exception as other_exception:
@@ -805,7 +805,7 @@ class InferenceService:
             else:  # Either input audioContent or audioUri have to exist. Validation in Pydantic class.
                 file_bytes = self.audio_service.download_audio(input.audioUri)  # type: ignore
         except Exception:
-            raise BaseError(Errors.DHRUVA116.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V116.value, traceback.format_exc())
 
         return file_bytes
 
@@ -921,6 +921,6 @@ class InferenceService:
                 else:
                     serviceId = "ai4bharat/indic-tts-indo-aryan--gpu-t4"
             case _:
-                raise BaseError(Errors.DHRUVA115.value)
+                raise BaseError(Errors.SAGE_V115.value)
 
         return serviceId

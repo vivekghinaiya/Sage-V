@@ -68,7 +68,7 @@ class AuthService:
         try:
             user = self.user_repository.find_one({"email": request.email})
         except:
-            raise BaseError(Errors.DHRUVA201.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V201.value, traceback.format_exc())
 
         if not user:
             raise ClientError(
@@ -87,7 +87,7 @@ class AuthService:
                 message="Invalid credentials",
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA202.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V202.value, traceback.format_exc())
 
         session = Session(
             user_id=ObjectId(str(user.id)),
@@ -98,7 +98,7 @@ class AuthService:
         try:
             id = self.session_repository.insert_one(session)
         except Exception:
-            raise BaseError(Errors.DHRUVA203.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V203.value, traceback.format_exc())
 
         token = jwt.encode(
             {
@@ -152,7 +152,7 @@ class AuthService:
         try:
             id = self.session_repository.insert_one(session)
         except Exception:
-            raise BaseError(Errors.DHRUVA203.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V203.value, traceback.format_exc())
 
         token = jwt.encode(
             {
@@ -185,7 +185,7 @@ class AuthService:
                 {"name": request.name, "user_id": user_id}
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA208.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V208.value, traceback.format_exc())
 
         if existing_api_key and request.regenerate:
             key = self.__regenerate_api_key(existing_api_key)
@@ -224,7 +224,7 @@ class AuthService:
             api_key_cache = ApiKeyCache(**api_key.dict())
             api_key_cache.save()
         except Exception:
-            raise BaseError(Errors.DHRUVA204.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V204.value, traceback.format_exc())
 
         return key
 
@@ -241,7 +241,7 @@ class AuthService:
             api_key_cache = ApiKeyCache(**existing_api_key.dict())
             api_key_cache.save()
         except Exception:
-            raise BaseError(Errors.DHRUVA204.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V204.value, traceback.format_exc())
 
         return key
 
@@ -261,7 +261,7 @@ class AuthService:
                 {"name": params.api_key_name, "user_id": user_id}
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA208.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V208.value, traceback.format_exc())
 
         if not key:
             raise ClientError(
@@ -307,7 +307,7 @@ class AuthService:
                     api_keys=keys, total_usage=total_usage
                 )
         except Exception:
-            raise BaseError(Errors.DHRUVA205.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V205.value, traceback.format_exc())
 
         return GetAllApiKeysDetailsResponse(api_keys=keys)
 
@@ -348,7 +348,7 @@ class AuthService:
                 {"name": params.api_key_name, "user_id": user_id}
             )
         except Exception:
-            raise BaseError(Errors.DHRUVA208.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V208.value, traceback.format_exc())
 
         if not api_key:
             raise ClientError(
@@ -373,7 +373,7 @@ class AuthService:
             api_key_cache = ApiKeyCache(**api_key.dict())
             api_key_cache.save()
         except Exception:
-            raise BaseError(Errors.DHRUVA211.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V211.value, traceback.format_exc())
 
         return api_key
 
@@ -386,7 +386,7 @@ class AuthService:
             )
         except Exception:
             raise ULCADeleteApiKeyServerError(
-                Errors.DHRUVA208.value, traceback.format_exc()
+                Errors.SAGE_V208.value, traceback.format_exc()
             )
 
         if not api_key:
@@ -404,7 +404,7 @@ class AuthService:
             api_key_cache.save()
         except Exception:
             raise ULCADeleteApiKeyServerError(
-                Errors.DHRUVA209.value, traceback.format_exc()
+                Errors.SAGE_V209.value, traceback.format_exc()
             )
 
         return ULCAApiKeyDeleteResponse(
@@ -422,7 +422,7 @@ class AuthService:
             )
         except Exception:
             raise ULCASetApiKeyTrackingServerError(
-                Errors.DHRUVA208.value, traceback.format_exc()
+                Errors.SAGE_V208.value, traceback.format_exc()
             )
 
         if not api_key:
@@ -443,7 +443,7 @@ class AuthService:
             api_key_cache.save()
         except Exception:
             raise ULCASetApiKeyTrackingServerError(
-                Errors.DHRUVA210.value, traceback.format_exc()
+                Errors.SAGE_V210.value, traceback.format_exc()
             )
 
         return ULCAApiKeyTrackingResponse(

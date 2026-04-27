@@ -1,3 +1,4 @@
+import { AlignJustify, User } from "lucide-react";
 import {
   Box,
   HStack,
@@ -12,9 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { GiHamburgerMenu } from "react-icons/gi";
 import SidebarMobile from "./SidebarMobile";
-import { BiUser } from "react-icons/bi";
 
 
 const NavbarMobile = () => {
@@ -67,7 +66,7 @@ const NavbarMobile = () => {
       <Box ml="1rem" pt="1.5rem">
         <HStack>
           <Box mr="1rem" fontSize={"2xl"} onClick={onToggle}>
-            <GiHamburgerMenu />
+            <AlignJustify />
           </Box>
           <Slide
             direction="left"
@@ -84,9 +83,9 @@ const NavbarMobile = () => {
           <Box>
             <Menu>
               <MenuButton width="2rem" px={0} py={2} transition="all 0.2s">
-                <BiUser />
+                <User />
                 {/* <HStack>
-              <BiUser/>
+              <User/>
                <Text>{user?.name}</Text>
               </HStack> */}
             </MenuButton>

@@ -2,45 +2,45 @@ from enum import Enum
 
 
 class Errors(Enum):
-    DHRUVA201 = {"kind": "DHRUVA-201", "message": "Failed to get user details from db"}
-    DHRUVA202 = {"kind": "DHRUVA-202", "message": "Failed to compare password hash"}
-    DHRUVA203 = {
+    SAGE_V201 = {"kind": "DHRUVA-201", "message": "Failed to get user details from db"}
+    SAGE_V202 = {"kind": "DHRUVA-202", "message": "Failed to compare password hash"}
+    SAGE_V203 = {
         "kind": "DHRUVA-203",
         "message": "Failed to store auth token data in db",
     }
-    DHRUVA204 = {
+    SAGE_V204 = {
         "kind": "DHRUVA-204",
         "message": "Failed to create api key",
     }
-    DHRUVA205 = {
+    SAGE_V205 = {
         "kind": "DHRUVA-205",
         "message": "Failed to get all api keys",
     }
-    DHRUVA206 = {
+    SAGE_V206 = {
         "kind": "DHRUVA-206",
         "message": "Failed to get user",
     }
-    DHRUVA207 = {
+    SAGE_V207 = {
         "kind": "DHRUVA-207",
         "message": "Failed to create user",
     }
-    DHRUVA208 = {
+    SAGE_V208 = {
         "kind": "DHRUVA-208",
         "message": "Failed to get api key",
     }
-    DHRUVA209 = {
+    SAGE_V209 = {
         "kind": "DHRUVA-209",
         "message": "Failed to update api key status",
     }
-    DHRUVA210 = {
+    SAGE_V210 = {
         "kind": "DHRUVA-210",
         "message": "Failed to update api key tracking status",
     }
-    DHRUVA211 = {
+    SAGE_V211 = {
         "kind": "DHRUVA-211",
         "message": "Failed to modify api key params",
     }
-    DHRUVA212 = {
+    SAGE_V212 = {
         "kind": "DHRUVA-212",
         "message": "Failed to modify user details",
     }

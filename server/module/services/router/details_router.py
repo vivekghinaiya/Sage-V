@@ -52,7 +52,7 @@ async def _list_models(model_repository: ModelRepository = Depends(ModelReposito
     try:
         models_list = model_repository.find_all()
     except Exception:
-        raise BaseError(Errors.DHRUVA106.value, traceback.format_exc())
+        raise BaseError(Errors.SAGE_V106.value, traceback.format_exc())
 
     return models_list
 
@@ -65,7 +65,7 @@ async def _view_model_details(
     try:
         response = model_repository.find_by_id(request.modelId)
     except Exception:
-        raise BaseError(Errors.DHRUVA105.value, traceback.format_exc())
+        raise BaseError(Errors.SAGE_V105.value, traceback.format_exc())
 
     if not response:
         raise ClientError(status.HTTP_404_NOT_FOUND, message="Invalid Model Id")

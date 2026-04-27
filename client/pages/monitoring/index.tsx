@@ -248,15 +248,15 @@ const monitoring = () => {
         <br></br>
         <br></br>
         {smallscreen ? (
-          // https://grafana.dhruva.co
+          // https://grafana.sage-v.co
           <iframe
-            src={`${process.env.NEXT_PUBLIC_GRAFANA_URL}/d/Ye6zPeA7y/dhruva-inference-request-dashboard?orgId=2&var-apiKeyName=${apiKeyName}&var-userId=${selectedUser}&var-inferenceServiceId=${inferenceServiceId}&var-taskType=${taskType}&var-sourceLanguage=${sourceLanguage}&var-targetLanguage=${targetLanguage}&from=now-1h&to=now&kiosk=tv`}
+            src={`${process.env.NEXT_PUBLIC_GRAFANA_URL}/d/Ye6zPeA7y/sage-v-inference-request-dashboard?orgId=2&var-apiKeyName=${apiKeyName}&var-userId=${selectedUser}&var-inferenceServiceId=${inferenceServiceId}&var-taskType=${taskType}&var-sourceLanguage=${sourceLanguage}&var-targetLanguage=${targetLanguage}&from=now-1h&to=now&kiosk=tv`}
             height={640}
             width={360}
           />
         ) : (
           <iframe
-          src={`${process.env.NEXT_PUBLIC_GRAFANA_URL}/d/Ye6zPeA7y/dhruva-inference-request-dashboard?orgId=2&var-apiKeyName=${apiKeyName}&var-userId=${selectedUser}&var-inferenceServiceId=${inferenceServiceId}&var-taskType=${taskType}&var-sourceLanguage=${sourceLanguage}&var-targetLanguage=${targetLanguage}&from=now-1h&to=now&kiosk=tv`}
+          src={`${process.env.NEXT_PUBLIC_GRAFANA_URL}/d/Ye6zPeA7y/sage-v-inference-request-dashboard?orgId=2&var-apiKeyName=${apiKeyName}&var-userId=${selectedUser}&var-inferenceServiceId=${inferenceServiceId}&var-taskType=${taskType}&var-sourceLanguage=${sourceLanguage}&var-targetLanguage=${targetLanguage}&from=now-1h&to=now&kiosk=tv`}
             width={"95%"}
             height={600}
           />

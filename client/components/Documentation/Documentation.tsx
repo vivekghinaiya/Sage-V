@@ -1,6 +1,6 @@
 import { OrderedList, ListItem, Code } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { dhruvaAPI } from "../../api/apiConfig";
+import { sageVAPI } from "../../api/apiConfig";
 import useMediaQuery from "../../hooks/useMediaQuery";
 
 const Documentation = ({ ...props }) => {
@@ -11,7 +11,7 @@ const Documentation = ({ ...props }) => {
     <>
     <OrderedList spacing={7.5} width={smallscreen?"70vw":"35vw"}>
       <ListItem>
-        Set the Dhruva Inference URL in an endpoint url variable.
+        Set the Sage V Inference URL in an endpoint url variable.
       </ListItem>
       <Code
         colorScheme="blackAlpha"
@@ -19,7 +19,7 @@ const Documentation = ({ ...props }) => {
         borderRadius={10}
         width={smallscreen ? "70vw" : "35vw"}
       >
-        endpoint_url = {dhruvaAPI.genericInference}
+        endpoint_url = {sageVAPI.genericInference}
       </Code>
       <ListItem>
         {" "}

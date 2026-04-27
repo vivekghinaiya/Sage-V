@@ -1,19 +1,22 @@
 import {
+  Box,
+  Button,
   Grid,
   GridItem,
-  Image,
   Heading,
-  Stack,
+  Image,
   Input,
-  Button,
+  Stack,
+  Text,
+  useColorModeValue,
   useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import { login } from "../api/authAPI";
 import { useMutation } from "@tanstack/react-query";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { login } from "../api/authAPI";
 
 export default function Login() {
   const router = useRouter();
@@ -22,6 +25,8 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const heroBg = useColorModeValue("brand.500", "neutral.surfaceDark");
+  const surfaceBg = useColorModeValue("bg.canvas", "bg.surface");
   const mutation = useMutation(login);
 
   useEffect(() => {
@@ -29,48 +34,35 @@ export default function Login() {
       localStorage.getItem("refresh_token") &&
       localStorage.getItem("access_token")
     ) {
-      if (localStorage.getItem("currentpage")) 
-      {
-        router.push(localStorage.getItem("current_page"));
-      } 
-      else 
-      {
-        router.push("/services");
-      }
+      const savedPage = localStorage.getItem("current_page");
+      router.push(savedPage ?? "/services");
     }
-  }, []);
+  }, [router]);
 
   const validateCredentials = () => {
     mutation.mutate(
       { email: username, password: password },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           localStorage.setItem("email", username);
-          if (localStorage.getItem("current_page")) 
-          {
-            router.push(localStorage.getItem("current_page"))
-          } 
-          else 
-          {
-            router.push("/services");
-          }
+          const savedPage = localStorage.getItem("current_page");
+          router.push(savedPage ?? "/services");
         },
-        onError: (error: any) => {
-          if (
-            error?.response.status === 401 ||
-            error?.response.status === 422
-          ) {
+        onError: (error: unknown) => {
+          const axiosError = error as { response?: { status?: number } };
+          const status = axiosError?.response?.status;
+          if (status === 401 || status === 422) {
             toast({
-              title: "Error",
-              description: "Invalid Credentials",
+              title: "Sign-in failed",
+              description: "Invalid credentials — please check your email and password.",
               status: "error",
               duration: 5000,
               isClosable: true,
             });
           } else {
             toast({
-              title: "Error",
-              description: "Something went wrong, please try again later",
+              title: "Something went off-key",
+              description: "We couldn't reach the server. Please try again.",
               status: "error",
               duration: 5000,
               isClosable: true,
@@ -81,126 +73,99 @@ export default function Login() {
     );
   };
 
-  // const validateCredentials = async () => {
-  //   try {
-  //     await login(username, password);
-  //     localStorage.setItem("email", username);
-  //     if(localStorage.getItem("current_page"))
-  //     {
-  //       router.push(localStorage.getItem("current_page"))
-  //     }
-  //     else
-  //     {
-  //       router.push(localStorage.getItem("/services"))
-  //     }
-  //   } catch (error) {
-  //     if(error.response)
-  //     {
-  //     if (error.response.status === 401 || error.response.status === 422) {
-  //       toast({
-  //         title: "Error",
-  //         description: "Invalid Credentials",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //     } else {
-  //       toast({
-  //         title: "Error",
-  //         description: "Something went wrong, please try again later",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //     }
-  //   }
-  //  }
-  // };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") validateCredentials();
+  };
+
+  const formContent = (
+    <Stack spacing={6} w="100%" maxW="360px">
+      <Image
+        src="/sage-v-logo.svg"
+        alt="Sage V"
+        width={160}
+        height={44}
+      />
+      <Box>
+        <Heading fontFamily="Fraunces, Georgia, serif" size="lg" mb={1}>
+          Welcome back
+        </Heading>
+        <Text color="fg.muted" fontSize="sm">
+          Wisdom in every voice.
+        </Text>
+      </Box>
+      <Stack spacing={3}>
+        <Input
+          value={username}
+          type="email"
+          onChange={(e) => setUsername(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Email address"
+          size="lg"
+          aria-label="Email address"
+        />
+        <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
+          type="password"
+          placeholder="Password"
+          size="lg"
+          aria-label="Password"
+        />
+      </Stack>
+      <Button
+        colorScheme="brand"
+        size="lg"
+        width="100%"
+        isLoading={mutation.isLoading}
+        onClick={validateCredentials}
+      >
+        Sign in
+      </Button>
+    </Stack>
+  );
 
   return (
     <>
       <Head>
-        <title>Login into Dhruva</title>
+        <title>Sign in — Sage V</title>
+        <meta name="description" content="Sign in to your Sage V workspace." />
       </Head>
       {isMobile ? (
-        <Grid templateColumns="repeat(1, 1fr)">
-          <GridItem className="centered-column" w="100%" h="100vh">
-            <Stack spacing={5}>
-              <Image src="/a4b.svg" width={104} height={104} alt="a4b" />
-              <Heading>Login into Dhruva</Heading>
-              <Input
-                value={username}
-                type="username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-                placeholder="Username"
-                size="lg"
-              />
-              <Input
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                type="password"
-                placeholder="Password"
-                size="lg"
-              />
-              <Button
-                onClick={() => {
-                  validateCredentials();
-                }}
-              >
-                LOGIN
-              </Button>
-            </Stack>
-          </GridItem>
-        </Grid>
+        <Box
+          minH="100vh"
+          bg={surfaceBg}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          p={6}
+        >
+          {formContent}
+        </Box>
       ) : (
-        <Grid templateColumns="repeat(2, 1fr)">
+        <Grid templateColumns="repeat(2, 1fr)" minH="100vh">
           <GridItem
-            className="centered-column"
-            w="100%"
-            h="100vh"
-            bg="gray.100"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            bg={heroBg}
+            p={12}
           >
             <Image
-              src="/dhruvaai.svg"
-              width={500}
-              height={500}
-              alt="dhruvabot"
+              src="/sage-v-hero.svg"
+              width={480}
+              height={480}
+              alt="Sage V — Wisdom in every voice"
             />
           </GridItem>
-          <GridItem className="centered-column" w="100%" h="100vh">
-            <Stack spacing={5}>
-              <Image src="/a4b.svg" width={104} height={104} alt="a4b" />
-              <Heading>Login into Dhruva</Heading>
-              <Input
-                value={username}
-                type="username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-                placeholder="Username"
-                size="lg"
-              />
-              <Input
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                type="password"
-                placeholder="Password"
-                size="lg"
-              />
-              <Button
-                onClick={() => {
-                  validateCredentials();
-                }}
-              >
-                LOGIN
-              </Button>
-            </Stack>
+          <GridItem
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            bg={surfaceBg}
+            p={12}
+          >
+            {formContent}
           </GridItem>
         </Grid>
       )}

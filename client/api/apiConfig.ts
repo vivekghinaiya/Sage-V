@@ -1,76 +1,97 @@
 import axios from "axios";
 
-const dhruvaRootURL: string = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+const sageVRootURL: string = process.env.NEXT_PUBLIC_BACKEND_API_URL as string;
 
-const dhruvaAPI: { [key: string]: string } = {
-  listServices: `${dhruvaRootURL}/services/details/list_services`,
-  viewService: `${dhruvaRootURL}/services/details/view_service`,
-  listModels: `${dhruvaRootURL}/services/details/list_models`,
-  viewModel: `${dhruvaRootURL}/services/details/view_model`,
-  genericInference: `${dhruvaRootURL}/services/inference`,
-  translationInference: `${dhruvaRootURL}/services/inference/translation`,
-  ttsInference: `${dhruvaRootURL}/services/inference/tts`,
-  asrInference: `${dhruvaRootURL}/services/inference/asr`,
-  asrStreamingInference: `wss://api.dhruva.ai4bharat.org`,
-  // stsInference: `${dhruvaRootURL}/services/inference/s2s`,
-  nerInference: `${dhruvaRootURL}/services/inference/ner`,
-  pipelineInference: `${dhruvaRootURL}/services/inference/pipeline`,
-  xlitInference: `${dhruvaRootURL}/services/inference/transliteration`,
+const sageVAPI: { [key: string]: string } = {
+  listServices: `${sageVRootURL}/services/details/list_services`,
+  viewService: `${sageVRootURL}/services/details/view_service`,
+  listModels: `${sageVRootURL}/services/details/list_models`,
+  viewModel: `${sageVRootURL}/services/details/view_model`,
+  genericInference: `${sageVRootURL}/services/inference`,
+  translationInference: `${sageVRootURL}/services/inference/translation`,
+  ttsInference: `${sageVRootURL}/services/inference/tts`,
+  asrInference: `${sageVRootURL}/services/inference/asr`,
+  asrStreamingInference: `wss://${sageVRootURL?.replace(/^https?:\/\//, "")}`,
+  nerInference: `${sageVRootURL}/services/inference/ner`,
+  pipelineInference: `${sageVRootURL}/services/inference/pipeline`,
+  xlitInference: `${sageVRootURL}/services/inference/transliteration`,
 };
 
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
 
-const apiInstance = axios.create({ baseURL: dhruvaRootURL });
+const apiInstance = axios.create({ baseURL: sageVRootURL });
 
-function onTokenRefreshed(token: string) {
+function onTokenRefreshed(token: string): void {
   refreshSubscribers.forEach((subscriber) => subscriber(token));
   refreshSubscribers = [];
 }
 
-apiInstance.interceptors.request.use((config: any) => {
-  if (window.location.pathname !== "/") {
+apiInstance.interceptors.request.use((config) => {
+  if (typeof window !== "undefined" && window.location.pathname !== "/") {
     localStorage.setItem("current_page", window.location.href);
   }
-  config.headers["request-startTime"] = new Date().getTime();
-  const accessToken = localStorage.getItem("access_token");
-  if (accessToken) {
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
-    config.headers["x-auth-source"] = "AUTH_TOKEN";
+  if (config.headers) {
+    config.headers["request-startTime"] = String(new Date().getTime());
+    const accessToken =
+      typeof window !== "undefined"
+        ? localStorage.getItem("access_token")
+        : null;
+    if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+      config.headers["x-auth-source"] = "AUTH_TOKEN";
+    }
   }
   return config;
 });
 
 apiInstance.interceptors.response.use(
-  (response: any) => {
+  (response) => {
     const currentTime = new Date().getTime();
-    const startTime = response.config.headers["request-startTime"];
-    response.headers["request-duration"] = currentTime - startTime;
+    const startTime = response.config.headers?.["request-startTime"];
+    if (startTime) {
+      response.headers["request-duration"] = String(
+        currentTime - Number(startTime)
+      );
+    }
     return response;
   },
-  (error) => {
-    const originalRequest = error.config;
+  (error: unknown) => {
+    const axiosError = error as {
+      response?: { status: number };
+      config?: { _retry?: boolean; url?: string; headers?: Record<string, string> };
+    };
+    const originalRequest = axiosError.config;
     if (
-      error.response.status === 401 &&
+      axiosError.response?.status === 401 &&
+      originalRequest &&
       !originalRequest._retry &&
-      originalRequest.url !== `${dhruvaRootURL}/auth/refresh`
+      originalRequest.url !== `${sageVRootURL}/auth/refresh`
     ) {
       if (!isRefreshing) {
         isRefreshing = true;
-        const refreshToken = localStorage.getItem("refresh_token");
+        const refreshToken =
+          typeof window !== "undefined"
+            ? localStorage.getItem("refresh_token")
+            : null;
         return axios
-          .post(`${dhruvaRootURL}/auth/refresh`, { token: refreshToken })
+          .post(`${sageVRootURL}/auth/refresh`, { token: refreshToken })
           .then((res) => {
             if (res.status === 200) {
-              localStorage.setItem("access_token", res.data.token);
+              if (typeof window !== "undefined") {
+                localStorage.setItem("access_token", res.data.token);
+              }
               apiInstance.defaults.headers.common["Authorization"] =
                 "Bearer " + res.data.token;
               onTokenRefreshed(res.data.token);
-              return apiInstance(originalRequest);
+              return apiInstance(originalRequest as Parameters<typeof apiInstance>[0]);
             }
           })
-          .catch((e) => {
-            if (window.location.pathname !== "/") {
+          .catch((e: unknown) => {
+            if (
+              typeof window !== "undefined" &&
+              window.location.pathname !== "/"
+            ) {
               window.location.replace("/");
             }
             throw e;
@@ -81,15 +102,16 @@ apiInstance.interceptors.response.use(
       } else {
         return new Promise((resolve) => {
           refreshSubscribers.push((token) => {
-            originalRequest.headers["Authorization"] = `Bearer ${token}`;
-            resolve(apiInstance(originalRequest));
+            if (originalRequest?.headers) {
+              originalRequest.headers["Authorization"] = `Bearer ${token}`;
+            }
+            resolve(apiInstance(originalRequest as Parameters<typeof apiInstance>[0]));
           });
         });
       }
-    } else {
-      throw error;
     }
+    throw error;
   }
 );
 
-export { dhruvaAPI, apiInstance };
+export { sageVAPI, apiInstance };

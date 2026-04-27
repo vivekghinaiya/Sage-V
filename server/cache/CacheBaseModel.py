@@ -25,7 +25,7 @@ class CacheBaseModel(HashModel):
     id: Optional[str] = Field(default=None, alias="_id")
 
     class Meta:
-        global_key_prefix: str = "Dhruva"
+        global_key_prefix: str = "Sage V"
         # TODO: Generate model_key_prefix without 'pydantic.main'
         # model_key_prefix: str = None
         database: redis.Redis = get_cache_connection()

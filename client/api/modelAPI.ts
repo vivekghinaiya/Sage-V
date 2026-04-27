@@ -1,9 +1,9 @@
-import { dhruvaAPI,apiInstance } from "./apiConfig";
+import { sageVAPI, apiInstance } from "./apiConfig";
 
 const listModels = async (): Promise<ModelList[]> => {
   const response = await apiInstance({
     method: "GET",
-    url: dhruvaAPI.listModels,
+    url: sageVAPI.listModels,
   });
   return response.data;
 };
@@ -11,10 +11,8 @@ const listModels = async (): Promise<ModelList[]> => {
 const getModel = async (modelId: string | string[]): Promise<ModelView> => {
   const response = await apiInstance({
     method: "POST",
-    url: dhruvaAPI.viewModel,
-    data: {
-      modelId: modelId,
-    },
+    url: sageVAPI.viewModel,
+    data: { modelId },
   });
   return response.data;
 };

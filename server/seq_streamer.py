@@ -66,7 +66,7 @@ class StreamingServerTaskSequence:
         if "BACKEND_PORT" in os.environ:
             self.inference_url = f"http://localhost:{os.environ['BACKEND_PORT']}/services/inference/pipeline"
         else:
-            # self.inference_url = "https://api.dhruva.ai4bharat.org/services/inference/pipeline"
+            # self.inference_url = "https://api.sage-v.ai4bharat.org/services/inference/pipeline"
             exit(f"ERROR: Please set the env var `BACKEND_PORT`")
 
         self.audio_service = AudioService()
@@ -150,7 +150,7 @@ class StreamingServerTaskSequence:
             "controlConfig": {"dataTracking": False},
         }
 
-        # Run inference via Dhruva REST API
+        # Run inference via Sage V REST API
         response = requests.post(
             self.inference_url,
             json=request_json,

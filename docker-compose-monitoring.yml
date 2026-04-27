@@ -3,7 +3,7 @@ version: "3"
 services:
   prometheus:
     image: prom/prometheus:v2.37.6
-    container_name: prometheus
+    container_name: sage-v-prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
@@ -16,11 +16,11 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - dhruva-network
+      - sage-v-network
 
   grafana:
     image: grafana/grafana:9.4.3
-    container_name: grafana
+    container_name: sage-v-grafana
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
@@ -31,7 +31,7 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_FEATURE_TOGGLES_ENABLE=publicDashboards
       - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_NAME=PublicMonitoring
+      - GF_AUTH_ANONYMOUS_ORG_NAME=SageV
       - GF_SECURITY_ALLOW_EMBEDDING=true
       - GF_SECURITY_COOKIE_SECURE=$GRAFANA_SECURE_COOKIE
     restart: unless-stopped
@@ -40,10 +40,10 @@ services:
     env_file:
       - .env
     networks:
-      - dhruva-network
+      - sage-v-network
 
   prom-aggregation-gateway:
-    container_name: prom-aggregation-gateway
+    container_name: sage-v-prom-agg-gateway
     image: ghcr.io/zapier/prom-aggregation-gateway:v0.7.0
     volumes: 
       - prometheus_data:/prom-agg-gateway
@@ -54,12 +54,12 @@ services:
     environment:
       - PAG_AUTHUSERS=$PAG_AUTHUSERS
     networks:
-      - dhruva-network
+      - sage-v-network
 
 volumes:
   grafana_data: {}
   prometheus_data: {}
 
 networks:
-  dhruva-network:
-    name: dhruva-network
+  sage-v-network:
+    name: sage-v-network

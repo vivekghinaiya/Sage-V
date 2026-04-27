@@ -1,3 +1,4 @@
+import { ArrowLeft, TrendingUp } from "lucide-react";
 import {
   Box,
   Button,
@@ -24,8 +25,6 @@ import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { HiArrowLeft } from "react-icons/hi";
-import { SlGraph } from "react-icons/sl";
 import { listallusers } from "../../api/adminAPI";
 import { getService, listalluserkeys } from "../../api/serviceAPI";
 import ContentLayout from "../../components/Layouts/ContentLayout";
@@ -102,7 +101,7 @@ export default function ViewService() {
                 mb="1rem"
                 onClick={() => router.push("/services")}
               >
-                <HiArrowLeft /> &nbsp;Services
+                <ArrowLeft /> &nbsp;Services
               </Button>
               <Stack spacing={10} direction={"row"}>
                 <Heading>{serviceInfo["name"]}</Heading>
@@ -153,7 +152,7 @@ export default function ViewService() {
                   fontSize={"2xl"}
                   onClick={() => router.push("/services")}
                 >
-                  <HiArrowLeft />
+                  <ArrowLeft />
                 </Button>
                 <Heading>{serviceInfo["name"]}</Heading>
                 <ServicePerformanceModal

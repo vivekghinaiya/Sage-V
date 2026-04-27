@@ -21,10 +21,10 @@ class InferenceGateway:
         try:
             response = requests.post(service.endpoint, json=request_body.dict())
         except:
-            raise BaseError(Errors.DHRUVA101.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V101.value, traceback.format_exc())
 
         if response.status_code >= 400:
-            raise BaseError(Errors.DHRUVA102.value)
+            raise BaseError(Errors.SAGE_V102.value)
 
         return response.json()
 
@@ -47,7 +47,7 @@ class InferenceGateway:
             # health_ctx = triton_client.is_server_ready(headers=headers)
             # logger.info("Health ctx: {}".format(health_ctx))
             # if not health_ctx:
-            #     raise BaseError(Errors.DHRUVA107.value, "Triton server is not ready")
+            #     raise BaseError(Errors.SAGE_V107.value, "Triton server is not ready")
             response = triton_client.async_infer(
                 model_name,
                 model_version="1",
@@ -58,6 +58,6 @@ class InferenceGateway:
             response = response.get_result(block=True, timeout=20)
 
         except:
-            raise BaseError(Errors.DHRUVA101.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V101.value, traceback.format_exc())
 
         return response

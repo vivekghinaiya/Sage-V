@@ -3,7 +3,7 @@ version: "3"
 services:
   app_db:
     image: bitnami/mongodb:4.2.0
-    container_name: app_db
+    container_name: sage-v-app-db
     ports:
       - "27017:27017"
     volumes:
@@ -15,12 +15,12 @@ services:
     env_file:
       - .env
     networks:
-      - dhruva-network
+      - sage-v-network
 
 
   log_db:
     image: bitnami/mongodb:4.2.0
-    container_name: log_db
+    container_name: sage-v-log-db
     ports:
       - "27018:27017"
     volumes:
@@ -32,11 +32,11 @@ services:
     env_file:
       - .env
     networks:
-      - dhruva-network
+      - sage-v-network
   
   redis:
     image: redis:latest
-    container_name: redis
+    container_name: sage-v-redis
     ports:
       - "6379:6379"
     volumes:
@@ -44,7 +44,7 @@ services:
     command: redis-server --save 20 1 --loglevel warning
     restart: unless-stopped
     networks:
-      - dhruva-network
+      - sage-v-network
 
   mongo_admin:
     image: adicom/admin-mongo
@@ -61,7 +61,7 @@ services:
     env_file:
       - .env
     networks:
-      - dhruva-network
+      - sage-v-network
     
 
 volumes:
@@ -71,5 +71,5 @@ volumes:
   mongo_admin: {}
 
 networks:
-  dhruva-network:
-    name: dhruva-network
+  sage-v-network:
+    name: sage-v-network

@@ -1,0 +1,69 @@
+<svg width="600" height="600" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#2D5F4E" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FAF8F4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wave1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D5F4E" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#7BA697" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="wave2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4A574" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#2D5F4E" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="orb1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D5F4E"/>
+      <stop offset="100%" stop-color="#7BA697"/>
+    </linearGradient>
+    <linearGradient id="orb2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A574"/>
+      <stop offset="100%" stop-color="#C9985F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background fill -->
+  <rect width="600" height="600" fill="url(#bg)"/>
+
+  <!-- Large organic blob - sage green -->
+  <ellipse cx="200" cy="200" rx="180" ry="140" fill="url(#wave1)" opacity="0.18" transform="rotate(-20 200 200)"/>
+
+  <!-- Large organic blob - gold -->
+  <ellipse cx="420" cy="380" rx="160" ry="120" fill="url(#orb2)" opacity="0.15" transform="rotate(15 420 380)"/>
+
+  <!-- Flowing wave lines suggesting voice/speech -->
+  <!-- Wave 1 - large sage green arc -->
+  <path d="M50 320 C120 260 180 380 280 300 C380 220 440 340 540 280" stroke="url(#wave1)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- Wave 2 - slightly offset -->
+  <path d="M50 350 C130 290 190 400 290 330 C390 260 450 360 550 310" stroke="url(#wave1)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.35"/>
+  <!-- Wave 3 - gold tone -->
+  <path d="M50 280 C110 230 170 340 270 270 C370 200 430 310 530 250" stroke="url(#orb2)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- Central V shape - the brand mark -->
+  <path d="M240 150 C255 180 265 210 300 240 C335 210 345 180 360 150" stroke="#D4A574" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.85"/>
+  <!-- Apex circle -->
+  <circle cx="300" cy="241" r="6" fill="#D4A574" opacity="0.9"/>
+  <!-- Outer soundwave arcs around the V -->
+  <path d="M220 160 C233 178 244 198 256 218" stroke="#D4A574" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.45"/>
+  <path d="M380 160 C367 178 356 198 344 218" stroke="#D4A574" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.45"/>
+  <path d="M200 148 C215 168 228 190 242 210" stroke="#2D5F4E" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.3"/>
+  <path d="M400 148 C385 168 372 190 358 210" stroke="#2D5F4E" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.3"/>
+
+  <!-- Floating circles - abstract language nodes -->
+  <circle cx="120" cy="430" r="45" fill="url(#orb1)" opacity="0.12"/>
+  <circle cx="480" cy="160" r="55" fill="url(#orb2)" opacity="0.1"/>
+  <circle cx="460" cy="490" r="30" fill="url(#orb1)" opacity="0.14"/>
+  <circle cx="140" cy="140" r="25" fill="url(#orb2)" opacity="0.12"/>
+
+  <!-- Small decorative dots (language particles) -->
+  <circle cx="180" cy="380" r="4" fill="#2D5F4E" opacity="0.5"/>
+  <circle cx="420" cy="290" r="3" fill="#D4A574" opacity="0.6"/>
+  <circle cx="340" cy="450" r="5" fill="#7BA697" opacity="0.4"/>
+  <circle cx="260" cy="500" r="3" fill="#D4A574" opacity="0.5"/>
+  <circle cx="500" cy="380" r="4" fill="#2D5F4E" opacity="0.4"/>
+  <circle cx="80" cy="250" r="3" fill="#D4A574" opacity="0.5"/>
+
+  <!-- Tagline text paths -->
+  <text x="300" y="555" font-family="Georgia, serif" font-size="18" font-weight="400" fill="#2D5F4E" text-anchor="middle" opacity="0.7" font-style="italic">Wisdom in every voice</text>
+</svg>

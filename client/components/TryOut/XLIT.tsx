@@ -14,7 +14,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { dhruvaAPI, apiInstance } from "../../api/apiConfig";
+import { sageVAPI, apiInstance } from "../../api/apiConfig";
 import { lang2label } from "../../config/config";
 import { getWordCount } from "../../utils/utils";
 import React from "react";
@@ -61,7 +61,7 @@ const XLITTry: React.FC<Props> = (props) => {
     setFetching(true);
     apiInstance
       .post(
-        dhruvaAPI.xlitInference + `?serviceId=${props.serviceId}`,
+        sageVAPI.xlitInference + `?serviceId=${props.serviceId}`,
         {
           input: [
             {

@@ -5,23 +5,27 @@ interface ServiceList {
   hardwareDescription: string;
   publishedOn: number;
   modelId: string;
-  task: any;
-  languages: any;
+  task: { type?: string } | null;
+  languages: LanguageConfig[];
+  isActive?: boolean;
+  taskType?: string;
 }
+
 interface ServiceView {
   name: string;
   serviceDescription: string;
   hardwareDescription: string;
   publishedOn: number;
   modelId: string;
+  isActive?: boolean;
   model: {
     version: string;
     task: { type: string };
     languages: LanguageConfig[];
     inferenceEndPoint: {
       schema: {
-        request: any;
-        response: any;
+        request: unknown;
+        response: unknown;
       };
     };
   };

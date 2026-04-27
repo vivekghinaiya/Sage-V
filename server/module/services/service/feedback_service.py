@@ -33,7 +33,7 @@ class FeedbackService:
             self.feedback_repository.insert_one(feedback_obj)
             return {"message": "Feedback submitted successfully"}
         except Exception:
-            raise BaseError(Errors.DHRUVA110.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V110.value, traceback.format_exc())
 
     def fetch_questions(self, request: ULCAFeedbackQuestionRequest):
         return requests.post(
@@ -61,7 +61,7 @@ class FeedbackService:
         try:
             feedback_docs = self.feedback_repository.find(query)
         except Exception:
-            raise BaseError(Errors.DHRUVA110.value, traceback.format_exc())
+            raise BaseError(Errors.SAGE_V110.value, traceback.format_exc())
 
         file = io.StringIO()
         csv_writer = csv.writer(file)

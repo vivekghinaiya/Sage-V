@@ -1,3 +1,3 @@
 export default function Analyze() {
-  return <h1>Dhruva Analyze</h1>;
+  return <h1>Sage V Analyze</h1>;
 }

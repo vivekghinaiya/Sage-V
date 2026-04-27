@@ -1,3 +1,4 @@
+import { LayoutGrid, Cpu, Settings, GitBranch, BarChart2 } from "lucide-react";
 import {
   Text,
   Box,
@@ -9,13 +10,9 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { IoConstructOutline, IoGridOutline } from "react-icons/io5";
-import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { RiFlowChart } from "react-icons/ri";
-import { BiChart } from "react-icons/bi";
 
 const SidebarMobile: React.FC = () => {
   const bg = useColorModeValue("light.100", "dark.100");
@@ -65,7 +62,7 @@ const SidebarMobile: React.FC = () => {
             <Image alt="logo" src="/AI4Bharat.svg" height="50" width="50" />
             <Spacer />
             <Text marginLeft={4} fontSize={"x-large"} fontWeight={"bold"}>
-              Dhruva
+              Sage V
             </Text>
             <Spacer />
             <Spacer />
@@ -118,7 +115,7 @@ const SidebarMobile: React.FC = () => {
                 transition="width 0.2s"
               >
                 <Box>
-                  <IoGridOutline style={{ marginLeft: 12 }} size={25} />
+                  <LayoutGrid style={{ marginLeft: 12 }} size={25} />
                 </Box>
                 <Text marginLeft={4} fontWeight={"normal"}>
                   Services
@@ -143,7 +140,7 @@ const SidebarMobile: React.FC = () => {
                 transition="width 0.2s"
               >
                 <Box>
-                  <IoConstructOutline style={{ marginLeft: 12 }} size={25} />
+                  <Cpu style={{ marginLeft: 12 }} size={25} />
                 </Box>
                 <Text marginLeft={4} fontWeight={"normal"}>
                   Models
@@ -167,7 +164,7 @@ const SidebarMobile: React.FC = () => {
                 transition="width 0.2s"
               >
                 <Box>
-                  <IoConstructOutline style={{ marginLeft: 12 }} size={25} />
+                  <Cpu style={{ marginLeft: 12 }} size={25} />
                 </Box>
                 <Text marginLeft={4} fontWeight={"normal"}>
                   Pipeline
@@ -190,7 +187,7 @@ const SidebarMobile: React.FC = () => {
                 justifyContent="flex-start"
               >
                 <Box>
-                  <BiChart style={{ marginLeft: 12 }} size={25} />
+                  <BarChart2 style={{ marginLeft: 12 }} size={25} />
                 </Box>
                   <Text marginLeft={4} fontWeight={"normal"}>
                     Monitoring
@@ -239,7 +236,7 @@ const SidebarMobile: React.FC = () => {
                 transition="width 0.2s"
               >
                 <Box>
-                  <MdOutlineAdminPanelSettings
+                  <Settings
                     style={{ marginLeft: 12, marginRight: 12 }}
                     size={25}
                   />

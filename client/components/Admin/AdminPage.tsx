@@ -1,85 +1,133 @@
-import { Box, Button, Center,Divider,HStack,Spacer,Text, VStack } from '@chakra-ui/react';
-import React, { useState } from 'react'
-import AccessKeys from './AccessKeys'
-import {BiAngry, BiArrowBack, BiKey} from "react-icons/bi";
-import useMediaQuery from '../../hooks/useMediaQuery';
-import ExportFeedback from './ExportFeedback';
-import { MdOutlineFeedback, MdOutlineVpnKey, MdVpnKey } from 'react-icons/md';
-import { FaKey } from 'react-icons/fa';
+import {
+  Box,
+  Button,
+  Divider,
+  HStack,
+  Text,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
+import { ArrowLeft, Key, MessageSquare } from "lucide-react";
+import React, { useState } from "react";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import AccessKeys from "./AccessKeys";
+import ExportFeedback from "./ExportFeedback";
 
-const AdminPage = () => {
+type AdminSection = "menu" | "access-keys" | "feedback";
 
-  const [render, setRender] = useState(0);  
-  const [selectedSection, setSelectedSection] = useState('accessKeys');
+const AdminPage: React.FC = () => {
+  const [section, setSection] = useState<AdminSection>("menu");
   const smallscreen = useMediaQuery("(max-width: 1080px)");
 
+  const sidebarBg = useColorModeValue("white", "bg.surface");
+  const borderColor = useColorModeValue("border.default", "border.default");
+  const activeBg = useColorModeValue("brand.50", "whiteAlpha.100");
+  const activeColor = useColorModeValue("brand.600", "brand.300");
+  const mutedText = useColorModeValue("fg.muted", "fg.muted");
 
-  let renderme;
-
-  if(render == 0)
-    renderme =
-    <Box ml="1rem" mr="1rem">
-        <Box background={"orange.500"} height="3rem" width="90vw" onClick={()=>setRender(1)}>
-            <Center ml="1rem" mr="1rem">
-                <Text color={"white"} mt="0.5rem" fontSize={"large"} fontWeight={"bold"}>API Keys</Text>
-            </Center>
+  if (smallscreen) {
+    if (section === "menu") {
+      return (
+        <Box p={4}>
+          <Button
+            w="100%"
+            mb={3}
+            colorScheme="brand"
+            leftIcon={<Key size={16} />}
+            onClick={() => setSection("access-keys")}
+          >
+            API Keys
+          </Button>
+          <Button
+            w="100%"
+            colorScheme="brand"
+            variant="outline"
+            leftIcon={<MessageSquare size={16} />}
+            onClick={() => setSection("feedback")}
+          >
+            Export Feedback
+          </Button>
         </Box>
-        <Box background={"orange.500"} mt="1rem" height="3rem" width="90vw" onClick={()=>setRender(2)}>
-            <Center ml="1rem" mr="1rem">
-                <Text color={"white"} mt="0.5rem" fontSize={"large"} fontWeight={"bold"}>Export Feedback</Text>
-            </Center>
-        </Box>
-    </Box>
-  else if (render == 1)
-    renderme = <Box><Button variant={"link"} ml="1rem" onClick={()=>setRender(0)}><BiArrowBack/>&nbsp;Admin</Button ><AccessKeys/></Box> 
-  else if (render == 2)
-    renderme = <Box><Button variant={"link"} ml="1rem" onClick={()=>setRender(0)}><BiArrowBack/>&nbsp;Admin</Button ><ExportFeedback/></Box> 
+      );
+    }
+    return (
+      <Box>
+        <Button
+          variant="ghost"
+          leftIcon={<ArrowLeft size={16} />}
+          ml={4}
+          mb={2}
+          onClick={() => setSection("menu")}
+        >
+          Admin
+        </Button>
+        {section === "access-keys" && <AccessKeys />}
+        {section === "feedback" && <ExportFeedback />}
+      </Box>
+    );
+  }
 
   return (
-  <>
-    {smallscreen?
-    renderme:
-    <>
-    <Box display="flex" ml="-0.5rem" height="100vh" mt="-0.5rem" >
-      
-      <VStack  align="start" spacing="10px" width="200px" background="white" padding="10px">
-      <Divider />
-      <Box height="2rem"></Box>
-      <Box paddingTop="0.75rem" paddingBottom="0.75rem" paddingLeft={"0.5rem"}  width="100%" background={selectedSection == "accessKeys"?"orange.50":"white"} >
-        <HStack>
+    <Box display="flex" minH="calc(100vh - 6rem)">
+      <VStack
+        align="stretch"
+        spacing={0}
+        w="220px"
+        flexShrink={0}
+        bg={sidebarBg}
+        borderRight="1px solid"
+        borderColor={borderColor}
+        pt={4}
+      >
         <Text
-            fontWeight={selectedSection === 'accessKeys' ? 'bold' : 'normal'}
-            cursor="pointer"
-            onClick={() => setSelectedSection('accessKeys')}
-          >
-            Access Keys
-          </Text>
-          <BiKey/>
-        </HStack>
-      </Box>
-      <Divider/>
-      <Box paddingTop="0.75rem" paddingBottom="0.75rem" paddingLeft={"0.5rem"} width="100%" background={selectedSection == "exportFeedback"?"orange.50":"white"}>
-        <HStack>
-        <Text
-          fontWeight={selectedSection === 'exportFeedback' ? 'bold' : 'normal'}
-          cursor="pointer"
-          onClick={() => setSelectedSection('exportFeedback')}
+          px={4}
+          pb={2}
+          fontSize="10px"
+          fontWeight="700"
+          textTransform="uppercase"
+          letterSpacing="wider"
+          color={mutedText}
         >
-          Export Feedback
+          Admin
         </Text>
-        <MdOutlineFeedback/>
-        </HStack>
-        </Box>
+        <Divider />
+        {(
+          [
+            { key: "access-keys", label: "Access Keys", icon: <Key size={16} /> },
+            { key: "feedback", label: "Export Feedback", icon: <MessageSquare size={16} /> },
+          ] as { key: AdminSection; label: string; icon: React.ReactNode }[]
+        ).map(({ key, label, icon }) => (
+          <Box
+            key={key}
+            px={4}
+            py={3}
+            cursor="pointer"
+            bg={section === key ? activeBg : "transparent"}
+            color={section === key ? activeColor : undefined}
+            borderLeft={section === key ? "3px solid" : "3px solid transparent"}
+            borderLeftColor={section === key ? "accent.400" : "transparent"}
+            _hover={{ bg: activeBg, color: activeColor }}
+            onClick={() => setSection(key)}
+          >
+            <HStack spacing={2}>
+              {icon}
+              <Text fontWeight={section === key ? "600" : "400"} fontSize="sm">
+                {label}
+              </Text>
+            </HStack>
+          </Box>
+        ))}
       </VStack>
-      <Box flex="1" padding="10px">
-        {selectedSection === 'accessKeys' && <AccessKeys />}
-        {selectedSection === 'exportFeedback' && <ExportFeedback />}
+
+      <Box flex={1} p={6}>
+        {section === "menu" && (
+          <Text color={mutedText}>Select a section from the sidebar.</Text>
+        )}
+        {section === "access-keys" && <AccessKeys />}
+        {section === "feedback" && <ExportFeedback />}
       </Box>
     </Box>
-    </>
-    }
-  </>
   );
-}
+};
 
-export default AdminPage
+export default AdminPage;

@@ -42,7 +42,7 @@ async def _get_user(
     try:
         user = user_repository.find_one({"email": params.email})
     except Exception:
-        raise BaseError(Errors.DHRUVA206.value, traceback.format_exc())
+        raise BaseError(Errors.SAGE_V206.value, traceback.format_exc())
 
     if not user:
         raise ClientError(

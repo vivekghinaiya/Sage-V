@@ -1,0 +1,13 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark green background circle -->
+  <circle cx="28" cy="28" r="28" fill="#0F1419"/>
+  <!-- Stylized V mark with soundwave arcs in gold -->
+  <!-- Main V shape -->
+  <path d="M12 14 C16 18 20 22 24 28 C26 32 27 34 28 36 C29 34 30 32 32 28 C36 22 40 18 44 14" stroke="#D4A574" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Apex dot -->
+  <circle cx="28" cy="37" r="2.5" fill="#D4A574"/>
+  <!-- Left soundwave arc -->
+  <path d="M7 20 C11 24 14 27 17 30" stroke="#D4A574" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <!-- Right soundwave arc -->
+  <path d="M49 20 C45 24 42 27 39 30" stroke="#D4A574" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+</svg>

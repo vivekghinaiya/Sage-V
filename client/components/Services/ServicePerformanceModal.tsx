@@ -1,3 +1,4 @@
+import { ArrowLeft, TrendingUp } from "lucide-react";
 import {
   Box,
   Button,
@@ -24,8 +25,6 @@ import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { HiArrowLeft } from "react-icons/hi";
-import { SlGraph } from "react-icons/sl";
 import { listallusers } from "../../api/adminAPI";
 import { getService, listalluserkeys } from "../../api/serviceAPI";
 
@@ -56,7 +55,7 @@ const ServicePerformanceModal = ({ ...props }) => {
   return (
     <>
       <Button onClick={onOpen}>
-        <SlGraph />
+        <TrendingUp />
       </Button>
       <Modal isOpen={isOpen} size="8xl" onClose={onClose}>
         <ModalOverlay />
@@ -113,7 +112,7 @@ const ServicePerformanceModal = ({ ...props }) => {
             </Stack>
             <br />
             <iframe
-              src={`${process.env.NEXT_PUBLIC_GRAFANA_URL}/d/Ye6zPeA7y/dhruva-inference-request-dashboard?orgId=2&var-apiKeyName=${apiKeyName}&var-userId=${selectedUser}&var-inferenceServiceId=${service_id}&from=now-1h&to=now&kiosk=tv`}
+              src={`${process.env.NEXT_PUBLIC_GRAFANA_URL}/d/Ye6zPeA7y/sage-v-inference-request-dashboard?orgId=2&var-apiKeyName=${apiKeyName}&var-userId=${selectedUser}&var-inferenceServiceId=${service_id}&from=now-1h&to=now&kiosk=tv`}
               width={"100%"}
               height={600}
             />

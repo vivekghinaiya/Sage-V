@@ -1,3 +1,4 @@
+import { Mic } from "lucide-react";
 import {
   Button,
   Grid,
@@ -23,8 +24,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { FaMicrophone } from "react-icons/fa";
-import { apiInstance, dhruvaAPI } from "../api/apiConfig";
+import { apiInstance, sageVAPI } from "../api/apiConfig";
 import { listServices } from "../api/serviceAPI";
 import ContentLayout from "../components/Layouts/ContentLayout";
 import { lang2label } from "../config/config";
@@ -206,7 +206,7 @@ function PipelineInterface() {
     setFetching(true);
     apiInstance
       .post(
-        dhruvaAPI.pipelineInference,
+        sageVAPI.pipelineInference,
         {
           pipelineTasks: [
             {
@@ -436,7 +436,7 @@ function PipelineInterface() {
                     stopRecording();
                   }}
                 >
-                  <FaMicrophone /> Stop
+                  <Mic /> Stop
                 </Button>
               ) : (
                 <Button
@@ -445,7 +445,7 @@ function PipelineInterface() {
                     startRecording();
                   }}
                 >
-                  <FaMicrophone size={15} />
+                  <Mic size={15} />
                 </Button>
               )}
               <Button
